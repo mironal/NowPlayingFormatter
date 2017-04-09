@@ -53,3 +53,15 @@ print(formatter.format(from: item2))
 - %TrackNumber: MPMediaItemPropertyAlbumTrackNumber
 - %TrackCount: MPMediaItemPropertyAlbumTrackCount
 
+## Installation
+
+Write your `Cartfile`
+
+```
+github "mironal/NowPlayingFormatter"
+```
+
+and run `carthage update`.
+
+After build. you need setting `Carthage Copy Frameworks Run Script` on your xcode project.
+
