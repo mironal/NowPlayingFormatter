@@ -5,7 +5,7 @@ NowPlayingFormatter is a very smart formatter library for MPMediaItem written by
 ## Example
 
 ```swift
-let formatter = NowPlayingFormatter(format: "#nowplaying %Title by %Artist")
+let formatter = NowPlayingFormatter(format: "#nowplaying %t by %a")
 
 let item = MPMediaItem() // has title and artist info
 
@@ -17,7 +17,7 @@ However, MPMediaItem may not have all info.
 e.g. it has a title, but it has not a artist info.
 
 ```swift
-let formatter = NowPlayingFormatter(format: "#nowplaying %Title by %Artist")
+let formatter = NowPlayingFormatter(format: "#nowplaying %t by %a")
 
 let item = MPMediaItem() // have title, but have not artist info.
 
@@ -30,7 +30,7 @@ print(formatter.format(from: item))
 In such a case. You can use `${}` notation.
 
 ```swift
-let formatter = NowPlayingFormatter(format: "#nowplaying ${%Title}${ by %Artist}")
+let formatter = NowPlayingFormatter(format: "#nowplaying ${%t}${ by %a}")
 
 let item1 = MPMediaItem() // has title and artist information.
 
@@ -47,11 +47,13 @@ print(formatter.format(from: item2))
 
 ## Supported format
 
-- %Title: MPMediaItemPropertyTitle
-- %Artist: MPMediaItemPropertyArtist
-- %AlbumTitle: MPMediaItemPropertyAlbumTitle
-- %TrackNumber: MPMediaItemPropertyAlbumTrackNumber
-- %TrackCount: MPMediaItemPropertyAlbumTrackCount
+- "%a": MPMediaItemPropertyArtist,
+- "%t": MPMediaItemPropertyTitle,
+- "%l": MPMediaItemPropertyLyrics,
+- "%at": MPMediaItemPropertyAlbumTitle,
+- "%aa": MPMediaItemPropertyAlbumArtist,
+- "%tn": MPMediaItemPropertyAlbumTrackNumber,
+- "%tc": MPMediaItemPropertyAlbumTrackCount
 
 ## Installation
 

@@ -10,12 +10,14 @@ import MediaPlayer
 
 public extension NowPlayingFormatter {
 
-    static let supportedFormatSpecifierMap:[String: String] = [
-        "%Artist": MPMediaItemPropertyArtist,
-        "%Title": MPMediaItemPropertyTitle,
-        "%AlbumTitle": MPMediaItemPropertyAlbumTitle,
-        "%TrackNumber": MPMediaItemPropertyAlbumTrackNumber,
-        "%TrackCount": MPMediaItemPropertyAlbumTrackCount
+    public static let supportedFormatSpecifierMap: [String: String] = [
+        "%a": MPMediaItemPropertyArtist,
+        "%t": MPMediaItemPropertyTitle,
+        "%l": MPMediaItemPropertyLyrics,
+        "%at": MPMediaItemPropertyAlbumTitle,
+        "%aa": MPMediaItemPropertyAlbumArtist,
+        "%tn": MPMediaItemPropertyAlbumTrackNumber,
+        "%tc": MPMediaItemPropertyAlbumTrackCount
     ]
 }
 
@@ -23,7 +25,7 @@ public class NowPlayingFormatter: Formatter {
 
     let nowPlayingFormat: String
 
-    public init(format: String = "#nowplaying %Title${ by %Artist}${ - %AlbumTitle}") {
+    public init(format: String = "#nowplaying %t${ by %a}${ - %at}") {
         nowPlayingFormat = format
         super.init()
     }
@@ -54,15 +56,10 @@ public class NowPlayingFormatter: Formatter {
             return matches.reduce(nowPlayingFormat) { (f, checkingResult) -> String in
 
                 let text = (nowPlayingFormat as NSString).substring(with: checkingResult.range)
+                let nakami = (text as NSString).substring(with: NSRange(location: 2, length: (text as NSString).length - 3))
 
-                if findPropety(item: from, in: text) != nil {
-
-                    // remove brace
-                    let removed = text.replacingOccurrences(of: "${", with: "")
-                        .replacingOccurrences(of: "}", with: "")
-
-                    return f.replacingOccurrences(of: text, with: removed)
-
+                if hasProperty(text: nakami, in: from) {
+                    return f.replacingOccurrences(of: text, with: nakami)
                 } else {
 
                     // remove block
@@ -71,12 +68,7 @@ public class NowPlayingFormatter: Formatter {
             }
         }()
 
-        return type(of: self).supportedFormatSpecifierMap.reduce(template) { (f, keyValue) -> String in
-            if let value = findPropety(item: from, in: f) {
-                return f.replacingOccurrences(of: value.key, with: value.prop)
-            }
-            return f
-        }
+        return replace(text: template, with: from)
     }
 
     override public func string(for obj: Any?) -> String? {
@@ -89,23 +81,52 @@ public class NowPlayingFormatter: Formatter {
 
 private extension NowPlayingFormatter {
 
-    func findPropety(item: MPMediaItem, in text: String) -> (key: String, prop: String)? {
+    /// true if all property is not nil
+    func hasProperty(text: String, in item: MPMediaItem) -> Bool {
 
-        let any = type(of: self).supportedFormatSpecifierMap.flatMap({ (key, value) -> (key: String, prop: String)? in
-            guard text.contains(key) else {
-                return nil
+        let regex = NSRegularExpression.formatRegex
+
+        var components: [String] = []
+        regex.enumerateMatches(in: text, options: [], range: NSRange(location: 0, length: text.characters.count), using: { (result, _, _) in
+            guard let result = result else {
+                return
+            }
+            components.append((text as NSString).substring(with: result.range))
+        })
+
+        return components.first(where: { (c) -> Bool in
+            guard let key = type(of: self).supportedFormatSpecifierMap[c] else {
+                return false
             }
 
-            guard let prop = item.value(forProperty: value) else {
-                return nil
-            }
-            return (key, String(describing: prop))
-        }).first
+            return item.value(forProperty: key) == nil
+        }) == nil
+    }
 
-        guard let value = any else {
-            return nil
+    func replace(text: String, with item: MPMediaItem) -> String {
+
+        let regex = NSRegularExpression.formatRegex
+
+        var components: [String] = []
+        regex.enumerateMatches(in: text, options: [], range: NSRange(location: 0, length: text.characters.count), using: { (result, _, _) in
+            guard let result = result else {
+                return
+            }
+            components.append((text as NSString).substring(with: result.range))
+        })
+        
+        let replacesed = components.map { (c) -> String in
+
+            guard let key = type(of: self).supportedFormatSpecifierMap[c] else {
+                return c
+            }
+
+            if let value = item.value(forProperty: key) {
+                return String(describing: value)
+            }
+
+            return ""
         }
-
-        return (value.key, String(describing: value.prop))
+        return replacesed.joined(separator: "")
     }
 }

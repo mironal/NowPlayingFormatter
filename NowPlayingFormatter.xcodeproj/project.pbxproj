@@ -71,6 +71,7 @@
 		4ECD99A71E99F8A300FED246 /* NowPlayingFormatterTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NowPlayingFormatterTest.swift; sourceTree = "<group>"; };
 		4ECD99A81E99F8A300FED246 /* RegexTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegexTest.swift; sourceTree = "<group>"; };
 		4ECD99B11E9A09DE00FED246 /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
+		4ECD99D61E9C71D000FED246 /* Playground.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = Playground.playground; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -103,6 +104,7 @@
 		4ECD99691E99F85A00FED246 = {
 			isa = PBXGroup;
 			children = (
+				4ECD99D61E9C71D000FED246 /* Playground.playground */,
 				4ECD99751E99F85A00FED246 /* NowPlayingFormatter */,
 				4ECD99801E99F85A00FED246 /* NowPlayingFormatterTests */,
 				4ECD99921E99F88B00FED246 /* Demo */,
@@ -583,6 +585,7 @@
 				4ECD99891E99F85A00FED246 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		4ECD998A1E99F85A00FED246 /* Build configuration list for PBXNativeTarget "NowPlayingFormatterTests" */ = {
 			isa = XCConfigurationList;
@@ -591,6 +594,7 @@
 				4ECD998C1E99F85A00FED246 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		4ECD99A01E99F88B00FED246 /* Build configuration list for PBXNativeTarget "Demo" */ = {
 			isa = XCConfigurationList;
@@ -599,6 +603,7 @@
 				4ECD99A21E99F88B00FED246 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
