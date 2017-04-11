@@ -20,6 +20,8 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        formatField.text = "#nowplaying %t${ by %a}${ - %at}${ %tn/%tc}"
+
         var string = ""
         NowPlayingFormatter.supportedFormatSpecifierMap.forEach { (key, value) in
             string += "\(key) => \(value) \n"
@@ -27,9 +29,9 @@ class ViewController: UIViewController {
 
         string += "\n"
         string += "simple format\n"
-        string += "  #nowplaying %Title by %Artist - %AlbumTitle\n\n"
+        string += "  #nowplaying %t by %a - %at\n\n"
         string += "useful format\n"
-        string += "  #nowplaying %Title${ by %Artist}${ - %AlbumTitle}\n\n"
+        string += "  #nowplaying %t${ by %a}${ - %at}\n\n"
 
         descriptionText.text = string
     }

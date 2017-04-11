@@ -30,5 +30,14 @@ class RegexTest: XCTestCase {
         XCTAssertEqual(matches.count, 2)
     }
 
-    
+    func testFormat() {
+
+        let regex = NSRegularExpression.formatRegex
+        XCTAssertNotNil(regex)
+
+        let  text = "%at%a%l"
+        let matches = regex.matches(in: text, options: [], range: NSRange(location: 0, length: text.characters.count))
+
+        XCTAssertEqual(matches.count, 3)
+    }
 }

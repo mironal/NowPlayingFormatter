@@ -117,4 +117,17 @@ class NowPlayingFormatterTest: XCTestCase {
             XCTAssertEqual(f.string(from: item), "#nowplaying TITLE - ALBUM_TITLE", "without Artist")
         }
     }
+
+    func testNoSpace() {
+
+        let f = NowPlayingFormatter(format: "%t%a%at")
+
+        let item = MockMPMediaItem(dict: [
+            MPMediaItemPropertyTitle: "TITLE",
+            MPMediaItemPropertyArtist: "ARTIST",
+            MPMediaItemPropertyAlbumTitle: "ALBUM_TITLE"
+            ])
+
+        XCTAssertEqual(f.string(from: item), "TITLEARTISTALBUM_TITLE")
+    }
 }
