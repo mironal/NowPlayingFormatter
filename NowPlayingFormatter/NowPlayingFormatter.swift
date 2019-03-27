@@ -10,7 +10,7 @@ import MediaPlayer
 
 public extension NowPlayingFormatter {
 
-    public static let supportedFormatSpecifierMap: [String: String] = [
+    static let supportedFormatSpecifierMap: [String: String] = [
         "%a": MPMediaItemPropertyArtist,
         "%t": MPMediaItemPropertyTitle,
         "%l": MPMediaItemPropertyLyrics,
@@ -45,7 +45,7 @@ public class NowPlayingFormatter: Formatter {
 
         let matches = braceRegex.matches(in: nowPlayingFormat,
                                          options: [],
-                                         range: NSRange(location: 0, length: nowPlayingFormat.characters.count))
+                                         range: NSRange(location: 0, length: nowPlayingFormat.count))
 
         let template: String = {
 
@@ -87,7 +87,7 @@ private extension NowPlayingFormatter {
         let regex = NSRegularExpression.formatRegex
 
         var components: [String] = []
-        regex.enumerateMatches(in: text, options: [], range: NSRange(location: 0, length: text.characters.count), using: { (result, _, _) in
+        regex.enumerateMatches(in: text, options: [], range: NSRange(location: 0, length: text.count), using: { (result, _, _) in
             guard let result = result else {
                 return
             }
@@ -108,7 +108,7 @@ private extension NowPlayingFormatter {
         let regex = NSRegularExpression.formatRegex
 
         var components: [String] = []
-        regex.enumerateMatches(in: text, options: [], range: NSRange(location: 0, length: text.characters.count), using: { (result, _, _) in
+        regex.enumerateMatches(in: text, options: [], range: NSRange(location: 0, length: text.count), using: { (result, _, _) in
             guard let result = result else {
                 return
             }
