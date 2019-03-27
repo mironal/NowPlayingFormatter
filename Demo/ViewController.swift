@@ -44,7 +44,7 @@ class ViewController: UIViewController {
             return
         }
 
-        let controller = MPMusicPlayerController.systemMusicPlayer()
+        let controller = MPMusicPlayerController.systemMusicPlayer
 
         guard let item = controller.nowPlayingItem else {
             resultText.text = "not play music."

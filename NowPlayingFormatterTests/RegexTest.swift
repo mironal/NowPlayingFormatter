@@ -25,7 +25,7 @@ class RegexTest: XCTestCase {
         let regex = NSRegularExpression.braceRegex
 
         let text = "aa${AC A}bb ${aaa ${a}}cc${}c"
-        let matches = regex.matches(in: text, options: [], range: NSRange(location: 0, length: text.characters.count))
+        let matches = regex.matches(in: text, options: [], range: NSRange(location: 0, length: text.count))
 
         XCTAssertEqual(matches.count, 2)
     }
@@ -36,7 +36,7 @@ class RegexTest: XCTestCase {
         XCTAssertNotNil(regex)
 
         let  text = "%at%a%l"
-        let matches = regex.matches(in: text, options: [], range: NSRange(location: 0, length: text.characters.count))
+        let matches = regex.matches(in: text, options: [], range: NSRange(location: 0, length: text.count))
 
         XCTAssertEqual(matches.count, 3)
     }
