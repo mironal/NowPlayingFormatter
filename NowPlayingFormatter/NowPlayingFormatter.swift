@@ -21,6 +21,7 @@ public extension NowPlayingFormatter {
     ]
 }
 
+@objcMembers
 public class NowPlayingFormatter: Formatter {
 
     let nowPlayingFormat: String
