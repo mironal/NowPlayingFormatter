@@ -74,7 +74,9 @@ public extension NowPlayingFormatter {
         "%at": MPMediaItemPropertyAlbumTitle,
         "%aa": MPMediaItemPropertyAlbumArtist,
         "%tn": MPMediaItemPropertyAlbumTrackNumber,
-        "%tc": MPMediaItemPropertyAlbumTrackCount
+        "%tc": MPMediaItemPropertyAlbumTrackCount,
+        "%g": MPMediaItemPropertyGenre,
+        "%c": MPMediaItemPropertyComposer
     ]
 }
 
