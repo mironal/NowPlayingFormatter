@@ -15,6 +15,7 @@ public class NowPlayingFormatter: Formatter {
 
     public func string(from: MPMediaItem) -> String {
 
+        // 0. Split format by \n
         // 1. Split where it is surrounded by ${}.
         // 2. Does the MPMediaItem have elements of "%????"(e.g. $Artist)?.
         //    If it is not there, it is delete form the erement.
@@ -23,19 +24,22 @@ public class NowPlayingFormatter: Formatter {
 
         let braceRegex = NSRegularExpression.braceRegex
 
-        let matches = braceRegex.matches(in: nowPlayingFormat,
-                                         options: [],
-                                         range: NSRange(location: 0, length: nowPlayingFormat.count))
+        let formatLines = nowPlayingFormat.split(separator: "\n").map { String($0) }
 
-        let template: String = {
+        var templates: [String] = []
+        for format in formatLines {
+            let matches = braceRegex.matches(in: format,
+                                             options: [],
+                                             range: NSRange(location: 0, length: format.count))
 
             guard matches.count > 0 else {
-                return nowPlayingFormat
+                templates.append(format)
+                continue
             }
 
-            return matches.reduce(nowPlayingFormat) { (f, checkingResult) -> String in
+            let templateByLine = matches.reduce(format) { (f, checkingResult) -> String in
 
-                let text = (nowPlayingFormat as NSString).substring(with: checkingResult.range)
+                let text = (format as NSString).substring(with: checkingResult.range)
                 let nakami = (text as NSString).substring(with: NSRange(location: 2, length: (text as NSString).length - 3))
 
                 if hasProperty(text: nakami, in: from) {
@@ -46,9 +50,11 @@ public class NowPlayingFormatter: Formatter {
                     return f.replacingOccurrences(of: text, with: "")
                 }
             }
-        }()
+            guard !templateByLine.isEmpty else { continue }
+            templates.append(templateByLine)
+        }
 
-        return replace(text: template, with: from)
+        return replace(text: templates.joined(separator: "\n"), with: from)
     }
 
     override public func string(for obj: Any?) -> String? {

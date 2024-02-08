@@ -46,6 +46,50 @@ class NowPlayingFormatterTest: XCTestCase {
         XCTAssertEqual(f.string(from: item), "#nowplaying TITLE by ARTIST - ALBUM_TITLE")
     }
 
+    func testWithNewLine() {
+        do {
+            let f = NowPlayingFormatter(format: """
+${- %t}
+${- %a}
+- %at
+""")
+            let item = MockMPMediaItem(dict: [
+                MPMediaItemPropertyTitle: "TITLE",
+                MPMediaItemPropertyArtist: "ARTIST",
+                MPMediaItemPropertyAlbumTitle: "ALBUM_TITLE"
+            ])
+
+            XCTAssertEqual(f.string(for: item), """
+- TITLE
+- ARTIST
+- ALBUM_TITLE
+""")
+        }
+        do {
+            let f = NowPlayingFormatter(format: """
+${- %t}
+${- %a}
+- %at
+""")
+            let item = MockMPMediaItem(dict: [
+                MPMediaItemPropertyTitle: "TITLE",
+            ])
+
+            XCTAssertEqual(f.string(for: item), "- TITLE\n- ")
+        }
+
+        do {
+            let f = NowPlayingFormatter(format: "#nowplaying\n%t${ by %a}${ - %at}")
+            let item = MockMPMediaItem(dict: [
+                MPMediaItemPropertyTitle: "TITLE",
+                MPMediaItemPropertyArtist: "ARTIST",
+                MPMediaItemPropertyAlbumTitle: "ALBUM_TITLE"
+            ])
+
+            XCTAssertEqual(f.string(from: item), "#nowplaying\nTITLE by ARTIST - ALBUM_TITLE")
+        }
+    }
+
     func testAny() {
 
         let f = NowPlayingFormatter(format: "${%t %a}")
