@@ -47,13 +47,15 @@ print(formatter.format(from: item2))
 
 ## Supported format
 
-- "%a": MPMediaItemPropertyArtist,
-- "%t": MPMediaItemPropertyTitle,
-- "%l": MPMediaItemPropertyLyrics,
-- "%at": MPMediaItemPropertyAlbumTitle,
-- "%aa": MPMediaItemPropertyAlbumArtist,
-- "%tn": MPMediaItemPropertyAlbumTrackNumber,
+- "%a": MPMediaItemPropertyArtist
+- "%t": MPMediaItemPropertyTitle
+- "%l": MPMediaItemPropertyLyrics
+- "%at": MPMediaItemPropertyAlbumTitle
+- "%aa": MPMediaItemPropertyAlbumArtist
+- "%tn": MPMediaItemPropertyAlbumTrackNumber
 - "%tc": MPMediaItemPropertyAlbumTrackCount
+- "%g": MPMediaItemPropertyGenre
+- "%c": MPMediaItemPropertyComposer
 
 ## Installation
 
@@ -66,4 +68,3 @@ github "mironal/NowPlayingFormatter"
 and run `carthage update`.
 
 After build. you need setting `Carthage Copy Frameworks Run Script` on your xcode project.
-

@@ -1,11 +1,3 @@
-//
-//  Regex.swift
-//  NowPlayingFormatter
-//
-//  Created by mironal on 2017/04/09.
-//  Copyright © 2017年 covelline. All rights reserved.
-//
-
 import Foundation
 
 extension NSRegularExpression {
@@ -20,7 +12,7 @@ extension NSRegularExpression {
 
         // 文字数の長いものから並べる
         let pattern = "(\(NowPlayingFormatter.supportedFormatSpecifierMap.keys.sorted().reversed().joined(separator: "|"))|.+?)"
-        let r =  try? NSRegularExpression(pattern: pattern, options: [])
+        let r =  try? NSRegularExpression(pattern: pattern, options: [.dotMatchesLineSeparators])
 
         return r!
     }()
